@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ห้องทดลองพลังงานความร้อน ม.1</title>
+<style>
+:root{--bg:#071426;--panel:#10253d;--card:#15314e;--text:#eef7ff;--muted:#b7c9da;--hot:#ff7043;--cold:#4fc3f7;--warm:#ffd166;--ok:#50d890;--bad:#ff6b6b;--line:#9ad8ff;--accent:#7c4dff}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;background:radial-gradient(circle at 10% 0%,#16385f 0,#071426 45%,#04101d 100%);color:var(--text)}
+header{padding:28px 18px 18px;text-align:center}.badge{display:inline-block;padding:6px 12px;border:1px solid #ffffff33;border-radius:999px;background:#ffffff12;color:#d9eeff;font-size:.9rem}.title{font-size:clamp(1.7rem,4vw,3rem);font-weight:900;margin:10px 0 6px}.sub{color:var(--muted);max-width:900px;margin:auto;line-height:1.65}
+.wrap{width:min(1200px,94%);margin:auto;padding-bottom:56px}.grid{display:grid;grid-template-columns:360px 1fr;gap:18px;align-items:start}.card{background:linear-gradient(180deg,#173653e8,#0f2740e8);border:1px solid #ffffff1f;border-radius:20px;padding:18px;box-shadow:0 16px 40px #0004}.card h2,.card h3{margin-top:0}.controls label{display:flex;justify-content:space-between;gap:12px;margin:16px 0 6px;font-weight:700}.controls input[type=range]{width:100%;accent-color:var(--warm)}.mini{color:var(--muted);font-size:.9rem;line-height:1.55}.values{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.value{padding:12px;border-radius:14px;background:#07192c;border:1px solid #ffffff1c;text-align:center}.value b{font-size:1.4rem;display:block}.buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}button{border:0;border-radius:12px;padding:11px 14px;font-weight:800;cursor:pointer;background:var(--accent);color:white}button.secondary{background:#234665}button.good{background:#177a52}button.warn{background:#9d5c00}button:focus,input:focus,textarea:focus{outline:3px solid #b5e4ff;outline-offset:2px}
+.lab{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}.scene{min-height:340px;position:relative;overflow:hidden;background:linear-gradient(#071a2f,#0e3152 55%,#0b233a);border-radius:18px;border:1px solid #ffffff1f}.table{position:absolute;left:4%;right:4%;bottom:6%;height:74px;background:linear-gradient(#7b4b2a,#4f2f1d);border-radius:12px}.beaker{position:absolute;left:28%;bottom:78px;width:160px;height:190px;border:7px solid #cceeff;border-top:0;border-radius:0 0 30px 30px;background:linear-gradient(to top,rgba(79,195,247,.65) 0 var(--water-level),rgba(255,255,255,.04) var(--water-level) 100%);box-shadow:inset 0 0 22px #ffffff33}.beaker:before{content:"";position:absolute;left:-20px;right:-20px;top:-10px;height:18px;border:7px solid #cceeff;border-radius:50%;background:#0f2c49}.heater{position:absolute;left:25%;bottom:52px;width:185px;height:32px;border-radius:10px;background:#1e2430;box-shadow:0 0 28px rgba(255,112,67,var(--heat-glow))}.coil{position:absolute;left:18px;right:18px;top:8px;height:15px;border-radius:50%;border:4px solid #ff7043;box-shadow:0 0 18px #ff7043}.thermo{position:absolute;right:14%;bottom:85px;width:44px;height:210px}.thermo .stem{position:absolute;left:15px;top:0;width:14px;height:170px;background:#eaf7ff;border-radius:10px;border:3px solid #9fc9e8}.thermo .fill{position:absolute;left:18px;bottom:35px;width:8px;height:var(--temp-fill);background:linear-gradient(#ffd166,#ff5e57);border-radius:8px;transition:height .2s}.thermo .bulb{position:absolute;left:3px;bottom:0;width:38px;height:38px;border-radius:50%;background:#ff5e57;border:4px solid #eaf7ff}.bubble{position:absolute;border-radius:50%;background:#dff8ff99;border:1px solid #fff9;animation:rise var(--dur) linear infinite;opacity:var(--bubble-opacity)}@keyframes rise{from{transform:translateY(0) scale(.7)}to{transform:translateY(-135px) scale(1.15);opacity:0}}
+.readout{display:grid;gap:10px}.meter{padding:15px;border-radius:14px;background:#081b2f;border:1px solid #ffffff1f}.meter strong{font-size:1.5rem}.bar{height:10px;background:#17314a;border-radius:999px;overflow:hidden;margin-top:8px}.bar span{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,#4fc3f7,#ffd166,#ff7043);transition:width .2s}.concept{margin-top:12px;padding:12px;border-radius:14px;background:#3b2c071f;border:1px solid #ffd16655;color:#fff4ca}
+.chart-card{margin-top:18px}.chart-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}canvas{width:100%;height:270px;background:#07192c;border-radius:14px;border:1px solid #ffffff18;margin-top:10px}.objectives{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}.obj{background:#ffffff0c;border:1px solid #ffffff1c;border-radius:14px;padding:13px;text-align:center}.obj b{display:block;margin-bottom:4px}
+.quiz{margin-top:18px}.q{padding:15px;margin:12px 0;border:1px solid #ffffff1c;border-radius:14px;background:#0a2138}.q p{font-weight:800}.q label{display:block;margin:8px 0;padding:8px 10px;border-radius:10px;background:#ffffff08}.result{margin-top:14px;padding:14px;border-radius:14px;background:#07192c;display:none}.answer-key{margin-top:10px;color:#d9efff;line-height:1.7}.builder{margin-top:18px}.builder input,.builder textarea{width:100%;background:#081b2f;color:var(--text);border:1px solid #ffffff30;border-radius:10px;padding:10px;margin:6px 0;font-size:16px}.builder-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.custom-list{margin-top:12px}.custom-item{padding:10px;border-radius:10px;background:#081b2f;margin:8px 0;border:1px solid #ffffff1c}.footer{color:#9ab1c5;text-align:center;padding:28px 12px 0;font-size:.9rem}
+@media(max-width:900px){.grid,.lab{grid-template-columns:1fr}.controls{order:0}.objectives{grid-template-columns:1fr}.scene{min-height:320px}.builder-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.bubble{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <span class="badge">Interactive Science Lab • มัธยมศึกษาปีที่ 1</span>
+  <div class="title">🔥 ห้องทดลองพลังงานความร้อน</div>
+  <p class="sub">ปรับตัวแปร ทดลอง สังเกต และวิเคราะห์ผลแบบทันที เพื่อศึกษาความสัมพันธ์ระหว่าง <b>กำลังความร้อน</b> และ <b>มวลของน้ำ</b> ต่อการเปลี่ยนแปลงอุณหภูมิ</p>
+</header>
+<main class="wrap">
+  <section class="objectives">
+    <div class="obj"><b>🧪 ทดลอง</b><span class="mini">ปรับค่าตัวแปรและทดสอบสถานการณ์ต่าง ๆ</span></div>
+    <div class="obj"><b>👀 สังเกต</b><span class="mini">ดูอุณหภูมิ ภาพเคลื่อนไหว และกราฟแบบ real-time</span></div>
+    <div class="obj"><b>🧠 วิเคราะห์</b><span class="mini">อธิบายผลของกำลังความร้อนและมวลที่มีต่ออุณหภูมิ</span></div>
+  </section>
+
+  <section class="grid">
+    <aside class="card controls">
+      <h2>🎛️ แผงควบคุม</h2>
+      <label>ตัวแปรที่ 1: กำลังความร้อน <span><b id="powerV">500</b> W</span></label>
+      <input id="power" type="range" min="100" max="1200" step="50" value="500" />
+      <div class="mini">ยิ่งกำลังสูง พลังงานที่ถ่ายโอนเข้าสู่น้ำต่อวินาทียิ่งมาก</div>
+
+      <label>ตัวแปรที่ 2: มวลของน้ำ <span><b id="massV">300</b> g</span></label>
+      <input id="mass" type="range" min="100" max="1000" step="50" value="300" />
+      <div class="mini">เมื่อมวลมากขึ้น ต้องใช้พลังงานมากขึ้นเพื่อให้อุณหภูมิสูงขึ้นเท่ากัน</div>
+
+      <label>อุณหภูมิเริ่มต้น <span><b id="startV">25</b> °C</span></label>
+      <input id="start" type="range" min="10" max="50" step="1" value="25" />
+
+      <div class="values">
+        <div class="value"><span class="mini">เวลา</span><b id="timeV">0.0 s</b></div>
+        <div class="value"><span class="mini">พลังงานสะสม</span><b id="energyV">0 J</b></div>
+      </div>
+      <div class="buttons">
+        <button id="startBtn">▶ เริ่มทดลอง</button>
+        <button id="pauseBtn" class="secondary">⏸ หยุดชั่วคราว</button>
+        <button id="resetBtn" class="warn">↺ เริ่มใหม่</button>
+      </div>
+      <p class="mini">แบบจำลองใช้สมการพื้นฐาน Q = mcΔT โดยประมาณการสูญเสียความร้อนบางส่วนเพื่อให้พฤติกรรมใกล้เคียงการทดลองจริง</p>
+    </aside>
+
+    <section>
+      <div class="card lab">
+        <div class="scene" id="scene" style="--water-level:66%;--temp-fill:40%;--heat-glow:.55;--bubble-opacity:.25">
+          <div class="table"></div>
+          <div class="beaker" aria-label="บีกเกอร์บรรจุน้ำ">
+            <span class="bubble" style="left:24px;bottom:12px;width:12px;height:12px;--dur:2.2s"></span>
+            <span class="bubble" style="left:70px;bottom:10px;width:9px;height:9px;--dur:2.8s"></span>
+            <span class="bubble" style="left:110px;bottom:15px;width:14px;height:14px;--dur:2.5s"></span>
+          </div>
+          <div class="heater"><div class="coil"></div></div>
+          <div class="thermo"><div class="stem"></div><div class="fill"></div><div class="bulb"></div></div>
+        </div>
+        <div class="readout">
+          <div class="meter"><span class="mini">อุณหภูมิน้ำขณะนี้</span><br><strong id="tempV">25.0 °C</strong><div class="bar"><span id="tempBar" style="--w:25%"></span></div></div>
+          <div class="meter"><span class="mini">อัตราการเพิ่มอุณหภูมิ</span><br><strong id="rateV">0.00 °C/s</strong></div>
+          <div class="meter"><span class="mini">สถานะ</span><br><strong id="stateV">พร้อมทดลอง</strong></div>
+          <div class="concept" id="concept">💡 ลองเพิ่มกำลังความร้อน แล้วสังเกตความชันของกราฟว่าจะเปลี่ยนอย่างไร</div>
+        </div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="chart-head"><div><h2 style="margin-bottom:3px">📈 กราฟอุณหภูมิแบบ Real-time</h2><div class="mini">แกน X = เวลา (วินาที) • แกน Y = อุณหภูมิ (°C)</div></div><button id="clearGraph" class="secondary">ล้างกราฟ</button></div>
+        <canvas id="chart" width="900" height="300" aria-label="กราฟอุณหภูมิกับเวลา"></canvas>
+      </div>
+    </section>
+  </section>
+
+  <section class="card quiz">
+    <h2>✅ แบบประเมินท้ายกิจกรรม 10 ข้อ</h2>
+    <div id="quizBox"></div>
+    <div class="buttons"><button id="gradeBtn" class="good">ตรวจคำตอบ</button><button id="showKey" class="secondary">ดูเฉลย</button></div>
+    <div id="result" class="result" aria-live="polite"></div>
+    <div id="key" class="answer-key" hidden></div>
+  </section>
+
+  <section class="card builder">
+    <h2>✍️ ออกแบบโจทย์เพิ่มเอง</h2>
+    <p class="mini">ครูหรือนักเรียนสามารถเพิ่มคำถามใหม่ลงในหน้ากิจกรรมได้ทันที (ข้อมูลจะอยู่จนกว่าจะปิด/รีเฟรชหน้าเว็บ)</p>
+    <textarea id="newQ" rows="2" placeholder="พิมพ์คำถามใหม่..."></textarea>
+    <div class="builder-grid">
+      <input id="opt1" placeholder="ตัวเลือก A" />
+      <input id="opt2" placeholder="ตัวเลือก B" />
+      <input id="opt3" placeholder="ตัวเลือก C" />
+      <input id="opt4" placeholder="ตัวเลือก D" />
+    </div>
+    <label class="mini" for="correct">คำตอบที่ถูกต้อง</label>
+    <select id="correct" style="width:100%;background:#081b2f;color:#fff;border:1px solid #ffffff30;border-radius:10px;padding:10px;font-size:16px">
+      <option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option>
+    </select>
+    <div class="buttons"><button id="addQ">➕ เพิ่มโจทย์</button><button id="clearCustom" class="secondary">ล้างโจทย์ที่เพิ่ม</button></div>
+    <div id="customList" class="custom-list"></div>
+  </section>
+
+  <div class="footer">สื่อการเรียนรู้วิทยาศาสตร์ ม.1 • พลังงานความร้อน • HTML ไฟล์เดียว ใช้งานได้โดยไม่ต้องติดตั้งโปรแกรม</div>
+</main>
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const power=$('#power'), mass=$('#mass'), start=$('#start');
+const powerV=$('#powerV'), massV=$('#massV'), startV=$('#startV'), timeV=$('#timeV'), energyV=$('#energyV'), tempV=$('#tempV'), rateV=$('#rateV'), stateV=$('#stateV'), concept=$('#concept'), scene=$('#scene'), tempBar=$('#tempBar');
+let running=false, t=0, temp=+start.value, energy=0, last=performance.now(), raf=null, pts=[];
+function syncLabels(){powerV.textContent=power.value;massV.textContent=mass.value;startV.textContent=start.value;if(!running&&t===0){temp=+start.value;drawReadout(0)}}
+power.addEventListener('input',syncLabels); mass.addEventListener('input',syncLabels); start.addEventListener('input',syncLabels);
+function drawReadout(rate){tempV.textContent=temp.toFixed(1)+' °C';rateV.textContent=rate.toFixed(2)+' °C/s';timeV.textContent=t.toFixed(1)+' s';energyV.textContent=Math.round(energy).toLocaleString()+' J';const pct=Math.max(0,Math.min(100,(temp-10)/90*100));tempBar.style.setProperty('--w',pct+'%');scene.style.setProperty('--temp-fill',Math.max(8,Math.min(160,pct*1.6))+'px');scene.style.setProperty('--heat-glow',Math.min(1,+power.value/1200));scene.style.setProperty('--bubble-opacity',temp>70?Math.min(.9,(temp-65)/35):.15);scene.style.setProperty('--water-level',Math.max(25,Math.min(82,+mass.value/1000*70+18))+'%');if(temp>=99){stateV.textContent='ใกล้จุดเดือด';concept.textContent='💡 อุณหภูมิของน้ำใกล้ 100°C แล้ว แบบจำลองจำกัดอุณหภูมิไว้ใกล้จุดเดือด';}else if(rate>0.8){stateV.textContent='ร้อนขึ้นอย่างรวดเร็ว';concept.textContent='🔎 ความชันกราฟสูง แสดงว่าอุณหภูมิเพิ่มเร็ว ลองเพิ่มมวลน้ำแล้วเปรียบเทียบ';}else if(rate>0.2){stateV.textContent='กำลังร้อนขึ้น';concept.textContent='💡 สังเกตว่าเมื่อมวลเพิ่ม อัตราการเพิ่มอุณหภูมิจะลดลงเมื่อกำลังความร้อนเท่าเดิม';}else stateV.textContent=running?'ร้อนขึ้นช้า ๆ':'พร้อมทดลอง';}
+function tick(now){if(!running)return;let dt=Math.min(.08,(now-last)/1000);last=now;t+=dt;const p=+power.value,mkg=+mass.value/1000,c=4186;const loss=Math.max(0,(temp-25)*1.7);const net=Math.max(0,p-loss);let rate=net/(mkg*c);temp+=rate*dt;energy+=p*dt;if(temp>99.7){temp=99.7;rate=0;}if(pts.length===0||t-pts[pts.length-1].t>.18){pts.push({t,temp});if(pts.length>400)pts.shift();drawChart();}drawReadout(rate);raf=requestAnimationFrame(tick)}
+$('#startBtn').addEventListener('click',()=>{if(running)return;running=true;last=performance.now();stateV.textContent='กำลังทดลอง';raf=requestAnimationFrame(tick)});
+$('#pauseBtn').addEventListener('click',()=>{running=false;if(raf)cancelAnimationFrame(raf);stateV.textContent='หยุดชั่วคราว'});
+function reset(all=true){running=false;if(raf)cancelAnimationFrame(raf);t=0;energy=0;temp=+start.value;if(all)pts=[];drawReadout(0);drawChart();stateV.textContent='พร้อมทดลอง'}
+$('#resetBtn').addEventListener('click',()=>reset(true));$('#clearGraph').addEventListener('click',()=>{pts=[];drawChart()});
+const canvas=$('#chart'),ctx=canvas.getContext('2d');
+function drawChart(){const w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);ctx.fillStyle='#07192c';ctx.fillRect(0,0,w,h);const L=58,R=20,T=18,B=42,pw=w-L-R,ph=h-T-B;ctx.strokeStyle='#ffffff24';ctx.lineWidth=1;ctx.font='13px sans-serif';ctx.fillStyle='#b9cfe0';for(let i=0;i<=5;i++){const y=T+ph*i/5;ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(w-R,y);ctx.stroke();const val=(100-i*20);ctx.fillText(val+'°C',10,y+4)}const maxT=Math.max(30,pts.length?pts[pts.length-1].t:30);for(let i=0;i<=6;i++){const x=L+pw*i/6;ctx.beginPath();ctx.moveTo(x,T);ctx.lineTo(x,h-B);ctx.stroke();ctx.fillText((maxT*i/6).toFixed(0)+'s',x-8,h-14)}ctx.strokeStyle='#9ad8ff';ctx.lineWidth=3;ctx.beginPath();pts.forEach((p,i)=>{const x=L+(p.t/maxT)*pw;const y=T+(1-Math.max(0,Math.min(100,p.temp))/100)*ph;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();if(pts.length){const p=pts[pts.length-1],x=L+(p.t/maxT)*pw,y=T+(1-p.temp/100)*ph;ctx.fillStyle='#ffd166';ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill()}}
+const qs=[
+['เมื่อเพิ่มกำลังความร้อน โดยมวลน้ำคงเดิม จะเกิดอะไรขึ้น?',['อุณหภูมิเพิ่มเร็วขึ้น','อุณหภูมิเพิ่มช้าลง','อุณหภูมิไม่เปลี่ยน','มวลน้ำเพิ่มขึ้น'],0],
+['เมื่อเพิ่มมวลน้ำ แต่ใช้กำลังความร้อนเท่าเดิม อุณหภูมิจะเป็นอย่างไร?',['เพิ่มเร็วขึ้น','เพิ่มช้าลง','คงที่เสมอ','ลดลงทันที'],1],
+['หน่วยของพลังงานความร้อนในระบบ SI คือข้อใด?',['วัตต์','จูล','องศาเซลเซียส','กรัม'],1],
+['กราฟที่ชันมากขึ้นหมายถึงอะไร?',['อุณหภูมิเปลี่ยนเร็วขึ้น','มวลเพิ่มขึ้นเสมอ','เวลาหยุดเดิน','พลังงานเป็นศูนย์'],0],
+['ตัวแปรต้นในการทดลองนี้สามารถเป็นข้อใด?',['กำลังความร้อน','สีของบีกเกอร์','ชื่อผู้ทดลอง','ขนาดตัวอักษร'],0],
+['ตัวแปรตามที่สังเกตได้ชัดเจนคือข้อใด?',['อุณหภูมิของน้ำ','ชื่อห้องทดลอง','ชนิดของปุ่ม','จำนวนคำถาม'],0],
+['ถ้า P = 500 W หมายความว่าอย่างไร?',['ให้พลังงาน 500 J ต่อวินาที','มีมวล 500 g','อุณหภูมิ 500°C','ใช้เวลา 500 s เสมอ'],0],
+['สมการ Q = mcΔT ใช้อธิบายเรื่องใด?',['พลังงานความร้อนที่ทำให้อุณหภูมิเปลี่ยน','แรงโน้มถ่วง','การหักเหของแสง','กระแสไฟฟ้าเท่านั้น'],0],
+['ถ้าต้องการทดลองอย่างยุติธรรมเมื่อเปรียบเทียบกำลังความร้อน ควรทำอย่างไร?',['คงมวลน้ำและอุณหภูมิเริ่มต้นให้เท่ากัน','เปลี่ยนทุกตัวแปรพร้อมกัน','ใช้คนละหน่วย','ไม่ต้องบันทึกผล'],0],
+['ข้อสรุปใดเหมาะสมที่สุด?',['พลังงานที่มากขึ้นทำให้อุณหภูมิเปลี่ยนได้เร็วขึ้นเมื่อเงื่อนไขอื่นคงที่','มวลไม่มีผลต่อการเปลี่ยนอุณหภูมิ','อุณหภูมิไม่เกี่ยวกับพลังงาน','กำลังความร้อนมีหน่วยเป็นกรัม'],0]
+];
+const quizBox=$('#quizBox');function renderQuiz(){quizBox.innerHTML=qs.map((q,i)=>`<div class="q"><p>${i+1}. ${q[0]}</p>${q[1].map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(65+j)}. ${o}</label>`).join('')}</div>`).join('')}
+renderQuiz();$('#gradeBtn').addEventListener('click',()=>{let score=0;qs.forEach((q,i)=>{const a=document.querySelector(`input[name=q${i}]:checked`);if(a&&+a.value===q[2])score++});const r=$('#result');r.style.display='block';r.innerHTML=`<b>คะแนน ${score}/${qs.length}</b><br>${score>=8?'ยอดเยี่ยม! เข้าใจแนวคิดพลังงานความร้อนได้ดี 🎉':score>=6?'ดีมาก ลองทบทวนข้อที่ยังไม่มั่นใจอีกครั้ง 👍':'ลองปรับตัวแปรในห้องทดลองอีกครั้ง แล้วสังเกตกราฟก่อนทำแบบประเมินซ้ำ 🔬'}`});
+$('#showKey').addEventListener('click',()=>{const k=$('#key');k.hidden=!k.hidden;k.innerHTML=qs.map((q,i)=>`${i+1}) ${String.fromCharCode(65+q[2])}. ${q[1][q[2]]}`).join('<br>')});
+let custom=[];function renderCustom(){const box=$('#customList');box.innerHTML=custom.length?'<h3>โจทย์ที่เพิ่ม</h3>'+custom.map((x,i)=>`<div class="custom-item"><b>${i+1}. ${x.q}</b><br><span class="mini">A ${x.o[0]} • B ${x.o[1]} • C ${x.o[2]} • D ${x.o[3]} • เฉลย ${String.fromCharCode(65+x.a)}</span></div>`).join(''):'<span class="mini">ยังไม่มีโจทย์ที่เพิ่ม</span>'}
+$('#addQ').addEventListener('click',()=>{const q=$('#newQ').value.trim(),o=[$('#opt1').value.trim(),$('#opt2').value.trim(),$('#opt3').value.trim(),$('#opt4').value.trim()],a=+$('#correct').value;if(!q||o.some(v=>!v)){alert('กรุณากรอกคำถามและตัวเลือกให้ครบ');return}custom.push({q,o,a});$('#newQ').value='';['#opt1','#opt2','#opt3','#opt4'].forEach(id=>$(id).value='');renderCustom()});$('#clearCustom').addEventListener('click',()=>{custom=[];renderCustom()});
+syncLabels();drawChart();renderCustom();
+})();
+</script>
+</body>
+</html>
